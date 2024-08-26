@@ -137,7 +137,7 @@ TryStatement[Yield, Await, Return] :
 
 1. **Silent Error Suppression**: This is the point of the proposal. It's a syntactic sugar around an empty catch block, providing a more concise way to ignore errors when that's the desired behavior.
 
-2. **Debugging Challenges**: While silent error suppression is intentional, it might make debugging more difficult in some scenarios. Clear documentation and best practices will be crucial.
+2. **Debugger Challenges**: Some debuggers have the ability to pause the JavaScript execution when an error is thrown even if it's caught (Chrome Dev Tools's `pause on cought exceptions`). Where in the source file this pause should happen is an open question.
 
 3. **Interaction with Existing Try-Catch Semantics**: We need to carefully consider how this interacts with existing `try`-`catch`-`finally` semantics and ensure backwards compatibility.
 
