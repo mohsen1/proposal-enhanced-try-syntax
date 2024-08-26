@@ -4,36 +4,66 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 <script src="./spec.js"></script>
 <pre class="metadata">
-title: Proposal Title Goes Here
-stage: -1
-contributors: Your Name(s) Here
+title: Enhanced Try Syntax
+stage: 0
+contributors: Mohsen Azimi
 </pre>
 
-<emu-clause id="sec-demo-clause">
-  <h1>This is an emu-clause</h1>
-  <p>This is an algorithm:</p>
-  <emu-alg>
-    1. Let _proposal_ be *undefined*.
-    1. If IsAccepted(_proposal_) is *true*, then
-      1. Let _stage_ be *0*<sub>ℤ</sub>.
-    1. Else,
-      1. Let _stage_ be *-1*<sub>ℤ</sub>.
-    1. Return ? ToString(_stage_).
-  </emu-alg>
-</emu-clause>
+<emu-clause id="sec-enhanced-try-syntax">
+  <h1>Enhanced Try Syntax</h1>
+  <p>The Enhanced Try Syntax extends the existing try statement to allow for more flexible error handling patterns.</p>
 
-<emu-clause id="sec-is-accepted" type="abstract operation">
-  <h1>
-      IsAccepted (
-        _proposal_: an ECMAScript language value
-      ): a Boolean
-  </h1>
-  <dl class="header">
-    <dt>description</dt>
-    <dd>Tells you if the proposal was accepted</dd>
-  </dl>
-  <emu-alg>
-    1. If _proposal_ is not a String, or is not accepted, return *false*.
-    1. Return *true*.
-  </emu-alg>
+  <emu-clause id="sec-try-statement">
+    <h1>The try Statement</h1>
+    <p>The enhanced try statement allows for try blocks without catch or finally clauses, and try expressions.</p>
+    <emu-grammar>
+      TryStatement[Yield, Await, Return] :
+        `try` BlockStatement[?Yield, ?Await, ?Return]
+        `try` BlockStatement[?Yield, ?Await, ?Return] Catch[?Yield, ?Await, ?Return]
+        `try` BlockStatement[?Yield, ?Await, ?Return] Finally[?Yield, ?Await, ?Return]
+        `try` BlockStatement[?Yield, ?Await, ?Return] Catch[?Yield, ?Await, ?Return] Finally[?Yield, ?Await, ?Return]
+        `try` Expression[+In, ?Yield, ?Await]
+    </emu-grammar>
+  </emu-clause>
+
+  <emu-clause id="sec-try-evaluation" type="abstract operation">
+    <h1>
+      TryEvaluation (
+        *tryBlock*: a Parse Node,
+        *catchClause*: a Parse Node or *undefined*,
+        *finallyBlock*: a Parse Node or *undefined*
+      ): a normal completion containing an ECMAScript language value
+    </h1>
+    <dl class="header">
+      <dt>description</dt>
+      <dd>Evaluates a try statement or expression</dd>
+    </dl>
+    <emu-alg>
+      1. Let *result* be Completion(Evaluation of *tryBlock*).
+      1. If *result* is an abrupt completion and *catchClause* is not *undefined*, then
+        1. Set *result* to Completion(CatchClauseEvaluation of *catchClause* with argument *result*.[[Value]]).
+      1. If *finallyBlock* is not *undefined*, then
+        1. Let *F* be Completion(FinallyEvaluation of *finallyBlock*).
+        1. If *F* is an abrupt completion, return *F*.
+      1. If *result* is an abrupt completion, return *result*.
+      1. Return NormalCompletion(*result*.[[Value]]).
+    </emu-alg>
+  </emu-clause>
+
+  <emu-clause id="sec-try-expression-evaluation" type="abstract operation">
+    <h1>
+      TryExpressionEvaluation (
+        *expression*: a Parse Node
+      ): a normal completion containing an ECMAScript language value
+    </h1>
+    <dl class="header">
+      <dt>description</dt>
+      <dd>Evaluates a try expression</dd>
+    </dl>
+    <emu-alg>
+      1. Let *result* be Completion(Evaluation of *expression*).
+      1. If *result* is an abrupt completion, return NormalCompletion(*undefined*).
+      1. Return NormalCompletion(*result*.[[Value]]).
+    </emu-alg>
+  </emu-clause>
 </emu-clause>

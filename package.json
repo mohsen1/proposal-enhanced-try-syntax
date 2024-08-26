@@ -1,16 +1,16 @@
 {
   "private": true,
-  "name": "template-for-proposals",
-  "description": "A repository template for ECMAScript proposals.",
+  "name": "proposals-enhanced-try-syntax",
+  "description": "This proposal suggests extending the try statement in JavaScript to allow for more flexible error handling patterns",
   "scripts": {
     "start": "npm run build-loose -- --watch",
     "build": "npm run build-loose -- --strict",
     "build-loose": "node -e 'fs.mkdirSync(\"build\", { recursive: true })' && ecmarkup --load-biblio @tc39/ecma262-biblio --verbose spec.emu build/index.html --lint-spec"
   },
-  "homepage": "https://github.com/tc39/template-for-proposals#readme",
+  "homepage": "https://github.com/mohsen1/proposal-enhanced-try-syntax#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tc39/template-for-proposals.git"
+    "url": "git+https://github.com/mohsen1/proposal-enhanced-try-syntax.git"
   },
   "license": "MIT",
   "devDependencies": {
