@@ -59,13 +59,14 @@ try expression
 ```javascript
 // Example 1: Try without catch
 try {
-  riskyOperation();
+  tryInstallingPollyfill('feature1');
+  tryInstallingPollyfill('feature2');
 }
-console.log("This always runs, even if riskyOperation() throws");
+console.log("This always runs, even if tryInstallingPollyfill() throws");
 
 // Example 2: Try with expression
-try JSON.parse(potentiallyInvalidJson)
-console.log("This always runs, even if JSON.parse throws");
+try fs.unlinkSync('temp.txt');
+console.log("Continued execution, regardless of whether the file was deleted successfully");
 
 // Example 3: Combining with throw expressions (from the throw expressions proposal)
 function getEncoder(encoding) {
