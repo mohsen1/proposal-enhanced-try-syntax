@@ -27,43 +27,33 @@ contributors: Mohsen Azimi
   </emu-clause>
 
   <emu-clause id="sec-try-evaluation" type="abstract operation">
-    <h1>
-      TryEvaluation (
-        *tryBlock*: a Parse Node,
-        *catchClause*: a Parse Node or *undefined*,
-        *finallyBlock*: a Parse Node or *undefined*
-      ): a normal completion containing an ECMAScript language value
-    </h1>
+    <h1>TryEvaluation ( _tryBlock_, _catchClause_, _finallyBlock_ )</h1>
     <dl class="header">
       <dt>description</dt>
       <dd>Evaluates a try statement or expression</dd>
     </dl>
     <emu-alg>
-      1. Let *result* be Completion(Evaluation of *tryBlock*).
-      1. If *result* is an abrupt completion and *catchClause* is not *undefined*, then
-        1. Set *result* to Completion(CatchClauseEvaluation of *catchClause* with argument *result*.[[Value]]).
-      1. If *finallyBlock* is not *undefined*, then
-        1. Let *F* be Completion(FinallyEvaluation of *finallyBlock*).
-        1. If *F* is an abrupt completion, return *F*.
-      1. If *result* is an abrupt completion, return *result*.
-      1. Return NormalCompletion(*result*.[[Value]]).
+      1. Let _result_ be Completion(Evaluation of _tryBlock_).
+      1. If _result_ is an abrupt completion and _catchClause_ is not *undefined*, then
+        1. Set _result_ to Completion(CatchClauseEvaluation of _catchClause_ with argument _result_.[[Value]]).
+      1. If _finallyBlock_ is not *undefined*, then
+        1. Let _F_ be Completion(FinallyEvaluation of _finallyBlock_).
+        1. If _F_ is an abrupt completion, return _F_.
+      1. If _result_ is an abrupt completion, return _result_.
+      1. Return NormalCompletion(_result_.[[Value]]).
     </emu-alg>
   </emu-clause>
 
   <emu-clause id="sec-try-expression-evaluation" type="abstract operation">
-    <h1>
-      TryExpressionEvaluation (
-        *expression*: a Parse Node
-      ): a normal completion containing an ECMAScript language value
-    </h1>
+    <h1>TryExpressionEvaluation ( _expression_ )</h1>
     <dl class="header">
       <dt>description</dt>
       <dd>Evaluates a try expression</dd>
     </dl>
     <emu-alg>
-      1. Let *result* be Completion(Evaluation of *expression*).
-      1. If *result* is an abrupt completion, return NormalCompletion(*undefined*).
-      1. Return NormalCompletion(*result*.[[Value]]).
+      1. Let _result_ be Completion(Evaluation of _expression_).
+      1. If _result_ is an abrupt completion, return NormalCompletion(*undefined*).
+      1. Return NormalCompletion(_result_.[[Value]]).
     </emu-alg>
   </emu-clause>
 </emu-clause>
